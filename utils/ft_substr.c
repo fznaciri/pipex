@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 21:40:28 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 17:06:38 by mac              ###   ########.fr       */
+/*   Created: 2021/06/09 16:39:28 by mac               #+#    #+#             */
+/*   Updated: 2021/06/09 17:56:44 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	ft_putendl_fd(char *s, int fd)
+char	*ft_substr(char const *s, int start, size_t len)
 {
-	int	i;
+	char	*str;
+	int		i;
+	int		j;
 
+	if (!s)
+		return (NULL);
+	str = malloc(len + 1);
+	if (!str)
+		return (NULL);
 	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	write(fd, "\n", 1);
+	j = len;
+	while (s[start] != '\0' && i <= j - 1 && ft_strlen(s) >= start)
+		str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
 }

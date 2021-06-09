@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_cmd_last.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 21:40:28 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 17:06:38 by mac              ###   ########.fr       */
+/*   Created: 2021/06/09 17:07:53 by mac               #+#    #+#             */
+/*   Updated: 2021/06/09 18:15:04 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	ft_putendl_fd(char *s, int fd)
+t_cmd		*ft_cmd_last(t_cmd *lst)
 {
-	int	i;
-
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
+	if (lst)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		while (lst->next)
+			lst = lst->next;
 	}
-	write(fd, "\n", 1);
+	return (lst);
 }

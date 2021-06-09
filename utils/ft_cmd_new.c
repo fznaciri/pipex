@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_cmd_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 21:40:28 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 17:06:38 by mac              ###   ########.fr       */
+/*   Created: 2021/06/09 18:33:52 by mac               #+#    #+#             */
+/*   Updated: 2021/06/09 18:39:25 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	ft_putendl_fd(char *s, int fd)
+t_cmd	*ft_cmd_new(char *path, char **arg)
 {
-	int	i;
+	t_cmd	*new;
 
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	write(fd, "\n", 1);
+	if (!(new = malloc(sizeof(t_cmd))))
+		return (NULL);
+	new->path = path;
+    new->arg = arg;
+    new->pipe[0] = -1;
+    new->pipe[1] = -1;
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
 }

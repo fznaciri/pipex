@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 21:40:28 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 17:06:38 by mac              ###   ########.fr       */
+/*   Created: 2021/06/09 16:48:37 by mac               #+#    #+#             */
+/*   Updated: 2021/06/09 16:48:48 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	ft_putendl_fd(char *s, int fd)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int	i;
+	size_t	i;
+	char	*s;
 
 	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	if (s1 && !s2)
+		return (ft_strdup(s1));
+	s = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!s)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		s[i] = s1[i];
+	while (*s2)
 	{
-		write(fd, &s[i], 1);
+		*(s + i) = *s2;
+		s2++;
 		i++;
 	}
-	write(fd, "\n", 1);
+	*(s + i) = '\0';
+	return (s);
 }
