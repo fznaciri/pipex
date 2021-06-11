@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:42:28 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 18:56:18 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/11 19:16:50 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ char    *get_path(char *s, char **env)
         f_path = ft_strjoin(tmp, s);
         free(tmp);
         if (open(f_path, O_RDONLY) > 0)
-            return f_path; 
+        {
+            ft_delete_arg(path);
+            
+            return f_path;
+        }
         free(f_path);
         i++;
     }

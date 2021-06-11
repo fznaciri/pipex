@@ -6,7 +6,7 @@
 /*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:29:21 by mac               #+#    #+#             */
-/*   Updated: 2021/06/11 15:27:39 by fnaciri-         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:21:04 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void get_cmd(int ac, char **av, t_pipex *p)
     {
         cmd = malloc(sizeof(t_cmd));
         cmd->arg = ft_split(av[i], ' '); 
-        cmd->path = ft_strdup(get_path(cmd->arg[0], p->env));
+        cmd->path = get_path(cmd->arg[0], p->env);
         ft_lstadd_back(&(p->cmd), ft_lstnew(cmd));
         i++;
     }

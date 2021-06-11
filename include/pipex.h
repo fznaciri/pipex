@@ -6,7 +6,7 @@
 /*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 21:19:46 by mac               #+#    #+#             */
-/*   Updated: 2021/06/11 15:32:01 by fnaciri-         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:22:44 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_pipex
     char *fout;
     int in;
     int out;
+    int status;
 } t_pipex;
 
 
@@ -65,5 +66,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *data);
+void	ft_delete_arg(char **arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 21:16:59 by mac               #+#    #+#             */
-/*   Updated: 2021/06/11 15:24:53 by fnaciri-         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:22:36 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int main(int ac, char **av, char **env)
     open_pipe(p->cmd);
     execute(p);
     close_pipe(p->cmd);
-	waitpid(p->pid, 0, 0);
+	waitpid(p->pid, &(p->status), 0);
+    p->status = WEXITSTATUS(p->status);
 	while (wait(NULL) > 0)
 		;
-    return (0);
+    return (p->status);
 }
