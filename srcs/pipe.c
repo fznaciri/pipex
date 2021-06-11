@@ -3,48 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:29:38 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 17:46:33 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/11 15:22:56 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void open_pipe(t_cmd *cmd)
+void open_pipe(t_list *cmd)
 {
-    t_cmd *tmp;
+    t_list *tmp;
     
     tmp = cmd;
     while (tmp)
     {
         if (tmp->next)
-            pipe(tmp->pipe);
+            pipe(((t_cmd*)tmp->data)->pipe);
         tmp = tmp->next;
     }
 }
 
-void close_pipe(t_cmd *cmd)
+void close_pipe(t_list *cmd)
 {
-    t_cmd *tmp;
+    t_list *tmp;
     
     tmp = cmd;
     while (tmp)
     {
         if (tmp->next)
         {
-            close(tmp->pipe[0]);
-            close(tmp->pipe[1]);
+            close(((t_cmd*)tmp->data)->pipe[0]);
+            close(((t_cmd*)tmp->data)->pipe[1]);
         }
         tmp = tmp->next;
     }
 }
 
-void    setup_pipe(t_cmd *cmd)
+void    setup_pipe(t_list *cmd)
 {
     if (cmd->next)
-        dup2(cmd->pipe[1], 1);
+    {
+        dup2(((t_cmd*)cmd->data)->pipe[1], 1);
+        close(((t_cmd*)cmd->data)->pipe[1]);
+        close(((t_cmd*)cmd->data)->pipe[0]);       
+    }
     if (cmd->prev)
-        dup2(cmd->prev->pipe[0], 0);
+    {
+        dup2(((t_cmd*)cmd->prev->data)->pipe[0], 0);
+        close(((t_cmd*)cmd->prev->data)->pipe[0]);
+        close(((t_cmd*)cmd->prev->data)->pipe[1]);
+    }
 }

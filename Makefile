@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/09 17:09:35 by mac               #+#    #+#              #
-#    Updated: 2021/06/09 18:38:06 by mac              ###   ########.fr        #
+#    Updated: 2021/06/11 18:32:52 by fnaciri-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,14 @@ SRC = ./srcs/execute.c \
 		./utils/ft_strlen.c \
 		./utils/ft_substr.c \
 		./utils/ft_putendl_fd.c \
-		./utils/ft_cmd_last.c \
-		./utils/ft_cmd_new.c \
-		./utils/ft_cmd_add_back.c 
+		./utils/linkedlist.c
 
 all: $(NAME)
 
 $(NAME):
 	@$(C)  -o $(NAME) main.c $(SRC)
-
+bonus:
+	@$(C)  -o $(NAME) main_bonus.c $(SRC)
 debug:
 	@$(C) -g -o $(NAME) main.c $(SRC) -fsanitize=address 
 
