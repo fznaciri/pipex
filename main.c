@@ -6,61 +6,37 @@
 /*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 21:16:59 by mac               #+#    #+#             */
-/*   Updated: 2021/06/11 19:22:36 by fnaciri-         ###   ########.fr       */
+/*   Updated: 2021/06/12 14:07:48 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex.h"
 
-void print_arg(char **arg)
+int	main(int ac, char **av, char **env)
 {
-    int i;
+	t_pipex	*p;
 
-    i = 0;
-    while(arg[i] && arg)
-    {
-        printf("arg[%d] |%s|\n",i, arg[i]);
-        i++;
-    }
-}
-
-// void    print_cmd(t_cmd *cmd)
-// {
-//     t_cmd *tmp = cmd;
-    
-// 	if (!tmp)
-// 		printf("NULL\n");
-// 	while (tmp)
-// 	{
-// 		printf("cmd %s\n", tmp->path);
-//         print_arg(tmp->arg);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-int main(int ac, char **av, char **env)
-{
-    t_pipex *p;
-    
-    if(!(p = malloc(sizeof(t_pipex))))
-        return 1;
-    if (ac != 5)
-    {
-        ft_putendl_fd(": usage: ./pipex file1 cmd1 cmd2 file2", 2);
-        exit(1);
-    }
-    p->env = env;
-    p->cmd = NULL;
-    p->fin = av[1];
-    p->fout = av[ac - 1];
-    get_cmd(ac, av, p);
-    // print_cmd(p->cmd);
-    open_pipe(p->cmd);
-    execute(p);
-    close_pipe(p->cmd);
+	p = malloc(sizeof(t_pipex));
+	if (!p)
+		return (1);
+	if (ac != 5)
+	{
+		ft_putendl_fd(": usage: ./pipex file1 cmd1 cmd2 file2", 2);
+		exit(1);
+	}
+	p->env = env;
+	p->cmd = NULL;
+	p->fin = av[1];
+	p->fout = av[ac - 1];
+	p->in = 0;
+	p->out = 0;
+	get_cmd(ac, av, p);
+	open_pipe(p->cmd);
+	execute(p);
+	close_pipe(p->cmd);
 	waitpid(p->pid, &(p->status), 0);
-    p->status = WEXITSTATUS(p->status);
+	p->status = WEXITSTATUS(p->status);
 	while (wait(NULL) > 0)
 		;
-    return (p->status);
+	return (p->status);
 }

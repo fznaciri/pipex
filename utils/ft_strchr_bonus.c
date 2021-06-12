@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmd_last.c                                      :+:      :+:    :+:   */
+/*   ft_strchr_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/09 17:07:53 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 18:15:04 by mac              ###   ########.fr       */
+/*   Created: 2021/06/12 11:49:22 by fnaciri-          #+#    #+#             */
+/*   Updated: 2021/06/12 14:48:46 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/pipex_bonus.h"
 
-t_cmd		*ft_cmd_last(t_cmd *lst)
+char	*ft_strchr(const char *s, int c)
 {
-	if (lst)
+	char	*str;
+
+	str = (char *)s;
+	if (!s)
+		return (NULL);
+	if (!c)
+		return (str + ft_strlen(s));
+	while (*str)
 	{
-		while (lst->next)
-			lst = lst->next;
+		if (*str == c)
+			return (str);
+		str++;
 	}
-	return (lst);
+	return (NULL);
 }

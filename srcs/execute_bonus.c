@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   execute_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/09 16:29:21 by mac               #+#    #+#             */
-/*   Updated: 2021/06/12 14:59:15 by fnaciri-         ###   ########.fr       */
+/*   Created: 2021/06/12 11:16:01 by fnaciri-          #+#    #+#             */
+/*   Updated: 2021/06/12 15:07:48 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/pipex_bonus.h"
 
 void	get_cmd(int ac, char **av, t_pipex *p)
 {
@@ -33,16 +33,18 @@ void	get_cmd(int ac, char **av, t_pipex *p)
 void	setup_red(t_pipex *p, t_list *cmd)
 {
 	if (!cmd->prev)
-		p->in = open(p->fin, O_RDONLY, S_IRWXU);
+	{
+		dup2(p->p_in[0], 0);
+		close(p->p_in[0]);
+		close(p->p_in[1]);
+	}
 	if (!cmd->next)
-		p->out = open(p->fout, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-	if (p->in < 0 || p->out < 0)
+		p->out = open(p->fout, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+	if (p->out < 0)
 	{
 		perror("Error");
 		exit(1);
 	}
-	if (!cmd->prev && p->in)
-		dup2(p->in, 0);
 	if (!cmd->next && p->out)
 		dup2(p->out, 1);
 }
@@ -53,7 +55,17 @@ static void	check_error(void)
 	exit(127);
 }
 
-void	execute(t_pipex *p)
+static void	close_in(t_pipex *p, t_list *cmd)
+{
+	if (!cmd->prev)
+	{
+		close(1);
+		close(p->p_in[1]);
+		close(p->p_in[0]);
+	}
+}
+
+void	execute_bonus(t_pipex *p)
 {
 	t_list	*cmd;
 
@@ -77,6 +89,7 @@ void	execute(t_pipex *p)
 		close(((t_cmd *)cmd->data)->pipe[1]);
 		if (cmd->prev)
 			close(((t_cmd *)cmd->prev->data)->pipe[0]);
+		close_in(p, cmd);
 		cmd = cmd->next;
 	}
 }

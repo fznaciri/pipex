@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmd_new.c                                       :+:      :+:    :+:   */
+/*   ft_strndup_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fnaciri- <fnaciri-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/09 18:33:52 by mac               #+#    #+#             */
-/*   Updated: 2021/06/09 18:39:25 by mac              ###   ########.fr       */
+/*   Created: 2021/06/12 11:50:41 by fnaciri-          #+#    #+#             */
+/*   Updated: 2021/06/12 14:51:22 by fnaciri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/pipex_bonus.h"
 
-t_cmd	*ft_cmd_new(char *path, char **arg)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	t_cmd	*new;
+	size_t	i;
+	char	*str;
 
-	if (!(new = malloc(sizeof(t_cmd))))
+	i = 0;
+	str = (char *)malloc((n * sizeof(char)) + 1);
+	if (!str)
 		return (NULL);
-	new->path = path;
-    new->arg = arg;
-    new->pipe[0] = -1;
-    new->pipe[1] = -1;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
+	while (s1[i] != '\0' && i < n)
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
